@@ -38,14 +38,14 @@ https://github.com/user-attachments/assets/5dc0e8f5-5011-4cf2-be77-6a77ec960501
 ### Quick Install
 
 ```bash
-pip install frida-mcp
+pip install git+https://github.com/dmnobunaga/frida-mcp
 ```
 
 ### Development Install
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/frida-mcp.git
+git clone https://github.com/dmnobunaga/frida-mcp.git
 cd frida-mcp
 
 # Install in development mode with extra tools
