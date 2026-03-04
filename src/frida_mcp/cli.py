@@ -6,6 +6,7 @@ This script is designed to be the target of the command in claude_desktop_config
 It sets up a basic Frida MCP server with STDIO transport for Claude to communicate with.
 """
 
+import argparse
 import sys
 import frida
 from mcp.server.fastmcp import FastMCP, Context
@@ -471,7 +472,34 @@ def get_session_messages(
 
 def main():
     """Run the CLI entry point for Claude Desktop integration."""
-    mcp.run()
+    parser = argparse.ArgumentParser(
+        description="Frida MCP server",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    parser.add_argument(
+        "--transport",
+        choices=["stdio", "sse", "streamable-http"],
+        default="stdio",
+        help="Transport protocol to use",
+    )
+    parser.add_argument(
+        "--host",
+        default="127.0.0.1",
+        help="Host to bind to (for sse and streamable-http transports)",
+    )
+    parser.add_argument(
+        "--port",
+        type=int,
+        default=8000,
+        help="Port to listen on (for sse and streamable-http transports)",
+    )
+    args = parser.parse_args()
+
+    if args.transport in ("sse", "streamable-http"):
+        mcp.settings.host = args.host
+        mcp.settings.port = args.port
+
+    mcp.run(transport=args.transport)
 
 
 if __name__ == "__main__":
