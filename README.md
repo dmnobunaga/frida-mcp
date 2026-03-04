@@ -73,6 +73,42 @@ To use Frida MCP with Claude Desktop, you'll need to update your Claude configur
 }
 ```
 
+## Transport Options
+
+`frida-mcp` supports three transport protocols via the `--transport` flag:
+
+| Transport | Description | Default |
+|-----------|-------------|---------|
+| `stdio` | Standard I/O (for Claude Desktop and similar integrations) | ✓ |
+| `sse` | Server-Sent Events over HTTP |  |
+| `streamable-http` | Streamable HTTP (MCP Streamable HTTP protocol) |  |
+
+### Running with Streamable HTTP
+
+```bash
+frida-mcp --transport streamable-http
+# Listens on http://127.0.0.1:8000/mcp by default
+
+frida-mcp --transport streamable-http --host 0.0.0.0 --port 9000
+```
+
+### Running with SSE
+
+```bash
+frida-mcp --transport sse
+# Listens on http://127.0.0.1:8000/sse by default
+
+frida-mcp --transport sse --host 0.0.0.0 --port 9000
+```
+
+### Running with STDIO (default)
+
+```bash
+frida-mcp
+# or explicitly:
+frida-mcp --transport stdio
+```
+
 ## Usage
 
 Once installed, you can use Frida MCP directly from Claude Desktop. The server provides the following capabilities:
